@@ -6,10 +6,10 @@
         id        = "com.phonegap.helloworld"
         version   = "1.0.0">
 
-    <name>Scouting App</name>
+    <name>Spywatch</name>
 
     <description>
-        1540 Scouting App Prototype.
+        1540 Scouting App for the Oregon City Event.
     </description>
 
     <!-- Define the main entry-point to the application -->
