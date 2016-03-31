@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="../css/index.css" />
+        <link rel="stylesheet" href="../css/bootstrap.css" />
+
+        <title>Portal</title>
+    </head>
+    <body onload="populate()">
+        <div class="container">
+            <div id="welcome">
+                <div class="row">
+                    <div class="col-xs-10">
+                        <h1 id="name"></h1>
+                        <h1><small>Insert really fun and "randomly generated" inspirational quote.<small></h1>
+                    </div>
+                    <div class="col-xs-2">
+                        <a class="btn btn-default btn-sm" href="login.html">Log Out</a>
+                    </div>
+                </div>
+                <br>
+                <a class="btn btn-lg btn-primary btn-block" id="" href="gamble.html"><h1 id="label">Scout Next Match</h1></a>
+                <!-- <div class="row">
+                    <div class="col-xs-12">
+                        <a href="instructions.html"><h2><small>Scouting Instructions</small></h2></a>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <script src="cordova.js"></script>
+        <script src="../js/jquery-2.2.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/index.js"></script>
+        <script type="text/javascript">
+            function populate() {
+
+                document.getElementById("name").innerHTML = "Welcome, " + persist.user.name;
+            }
+        </script>
+        <style type="text/css">
+            #label {
+                margin-top: 5px;
+                color: white;
+            }
+        </style>
+    </body>
+</html>

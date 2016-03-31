@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="../css/bootstrap.css">
+
+        <title>Scout Page</title>
+        <!--<script src="cordova.js"></script>-->
+        <script src="../js/writeFileFinal.js"></script>
+        <script src="../js/readFinalFile.js"></script>
+        <script type="text/javascript" src="../js/tablet.js"></script>
+    </head>
+    <body onload="populate()">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                    <button type="button" id="rdbtn" class="navbar-toggle btn" data-toggle="modal" data-target="#disabledRobot">
+                        Robot Disabled
+                    </button>
+                <p class="navbar-text" id="navscouting">Scouting:</p>
+                <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#disabledRobot" style="margin-top: 6px;" id="rdbtn">Robot Disabled</button>
+                </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div id="orient">
+                <h1>Quick Orientation:</h1>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div style="padding-left:20px">
+                            <h4 id="youare">You are:</h4>
+                            <h4 id="scouting">You are scouting team:</h4>
+                            <h4 id="bet">You bet on:</h4>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                        <div class="row">
+                            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" style="margin-bottom: 10px;" data-target="#missingRobot">Missing Robot!</button>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#setMatchNumber">Wrong Match!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center container row">
+                    <div class="col-xs-3">
+                        <div class="row">
+                            <h2>A</h2>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group btn-group-vertical" data-toggle="buttons" id="aD">
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="portcullis">Portcullis</label>
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="cheval de frise">Cheval de Frise</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="row">
+                            <h2>B</h1>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group btn-group-vertical" data-toggle="buttons" id="bD">
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="moat">Moat</label>
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="ramparts">Ramparts</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="row">
+                            <h2>C</h1>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group btn-group-vertical" data-toggle="buttons" id="cD">
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="drawbridge">Drawbridge</label>
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="sally port">Sally Port</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="row">
+                            <h2>D</h1>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group btn-group-vertical" data-toggle="buttons" id="dD">
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="rock wall">Rock Wall</label>
+                                <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="rough terrain">Rough Terrain</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary btn-block btn-lg" onclick="startMatch()">Start Match</button>
+            </div>
+            <div id="autoBox">
+                <h1>Autonomous</h1>
+                <div id="robotStarting" class="row">
+                    <div class="col-xs-6">
+                        <h4>Robot is starting...</h4>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="dropdown">
+                            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="rstart" data-toggle="dropdown">in the spy box. <span class="caret"></span></button>
+                            <ul id="autoStartDDL" class="dropdown-menu"></ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div id="robotInteraction" class="row">
+                    <div class="col-xs-3">
+                        <h4>Interacted with... </h4>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <div class="dropdown">
+                                    <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="rinter" data-toggle="dropdown">no defenses <span class="caret"></span></button>
+                                    <ul id="dInterDDL" class="dropdown-menu"></ul>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <h4>by...</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="dropdown">
+                            <button class="btn btn-lg btn-default dropdown-toggle" type="button" id="rby" data-toggle="dropdown">doing nothing <span class="caret"></span></button>
+                            <ul id="dByDDL" class="dropdown-menu"></ul>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div id="robotScore" class="row">
+                    <div class="col-xs-3">
+                        <h4>Scored in... </h4>
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="btn-group btn-group-justified" data-toggle="buttons" id="autoscore">
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="LOW">low</label>
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="HIGH">high</label>
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="NONE">no</label>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <h4>goal.</h4>
+                    </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary btn-block btn-lg" onclick="startTele()">Start Teleop</button>
+            </div>
+            <div id="teleBox">
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary" onclick="backToAuto();">Go Back</button>
+                </div>
+                <h1>Teleop</h1>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row text-center" id="shotBox">
+                                <h3>Shots</h3>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h4>Low Goal</h4>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h4>High Goal</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('lowSuccess', -1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="lowSuccess" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('lowSuccess', 1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MADE</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('highSuccess', -1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="highSuccess" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('highSuccess', 1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MADE</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('lowFail', -1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="lowFail" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('lowFail', 1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MISSED</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('highFail', -1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="highFail" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('highFail', 1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MISSED</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-sm-6">
+                            <div class="row text-center" id="DCBox">
+                                <h3>Defense Crossings</h3>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="ATITLE">A</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('ascore', -1, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="ascore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('ascore', 1, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="BTITLE">B</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('bscore', -1, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="bscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('bscore', 1, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="CTITLE">C</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                        <label id="down" onclick="changeScore('cscore', -1, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="cscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('cscore', 1, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="DTITLE">D</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                        <label id="down" onclick="changeScore('dscore', -1, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="dscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('dscore', 1, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="low">Low Bar Score:</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                        <label id="down" onclick="changeScore('lscore', -1, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="lscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('lscore', 1, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-primary btn-block btn-lg" onclick="endMatch()">End Match</button>
+                </div>
+            </div>
+            <div id="postBox">
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary" onclick="backToTele()">Go Back</button>
+                </div>
+                <h1>Post Match Questions</h1>
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        <h4>Did they challenge?</h4>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="btn-group" data-toggle="buttons" id="captured">
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="yes">yes</label>
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="no">no</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-6 text-center">
+                        <h4>Did they scale?</h4>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="btn-group" data-toggle="buttons" id="scaled">
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="yes">yes</label>
+                            <label class="btn btn-lg btn-success"><input type="radio" class="toggle" value="no">no</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4>Do you have something important to note about your robot in this match? If so, please write it below:</h4>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" placeholder="Optional" id="notes"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary btn-block btn-lg" onclick="submitMatch()">Submit Match</button>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div id="filekeeper">
+                    <div id="writerFileName"></div>
+                    <div id="writerFileContent"></div>
+                    <div id="readerFileName"></div>
+                    <div id="readerFileContent"></div>
+                </div>
+            </div>
+        </div>
+        <div id="modalkeeper">
+            <div id="disabledRobot" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">How did the robot get disabled?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="broken">It tipped, and now it's just laying there watching other able-bodied robots fly by.</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="broken">It broke somehow.</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="broken">It's a mystery! One second it was going and the next it wasn't going anymore...</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="noshow">It never actually showed up but I hit "Start Match" too early.</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="reset">Something went horribly wrong and they had to reset the field.</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="disabledRobot()">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="missingRobot" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">My robot is missing because...</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="wrongmatch">it's not even supposed to be in this match...</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="broken">it's broken.</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="missingRobot" class="toggle" value="noshow">it never even showed up!</label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="missingRobot()">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="setMatchNumber" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Manual Match Choice</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="dropdown" style="display: none;">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Choose match number...<span class="caret"></span></button>
+                                <ul class="dropdown-menu" aria-labelledby="dLabel" scrollable="true" id="matchNumList"></ul>
+                            </div>
+                            <input type="text" placeholder="Match #" class="form-control" id="matchNumResetIn">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="resetMatchNumber()">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modalmodal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">TITLE</h4>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../cordova.js"></script>
+        <script src="../js/jquery-2.2.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/index.js"></script>
+        <script src="../js/Sortable.min.js"></script>
+        <script type="text/javascript">
+            persist = JSON.parse(window.name);
+            var localCrosses = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+            var aD, bD, cD, dD;
+
+            function backToAuto() {
+                document.getElementById("teleBox").style.visibility = "hidden";
+                document.getElementById("autoBox").style.display = "block";
+            }
+
+            function backToTele() {
+                document.getElementById("postBox").style.visibility = "hidden";
+                document.getElementById("teleBox").style.display = "block";    
+            }
+
+            function changeScore(idd, additive, group){
+                localCrosses[groupToIndex(group)] += 1;
+
+                contents = document.getElementById(idd).innerHTML;
+                number = parseInt(contents, 10) + additive;
+                document.getElementById(idd).innerHTML = number;
+            }
+
+            function writeFile(filename, content) {
+                writeToFile(filename, content);
+            }
+
+            function readFile(filename, callback) {
+                readFromFile(filename, callback);
+            }
+
+            function groupToIndex(g) {
+                if (g === "N") {
+                    return;
+                } else if (g === "L") {
+                    return 8;
+                } else if (g === "A") {
+                    if (aD.charAt(0) === "p") {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                } else if (g === "B") {
+                    if (bD.charAt(0) === "m") {
+                        return 2;
+                    } else {
+                        return 3;
+                    }
+                } else if (g === "C") {
+                    if (cD.charAt(0) === "d") {
+                        return 4;
+                    } else {
+                        return 5;
+                    }
+                } else if (g === "D") {
+                    if (dD.charAt(2) === "c") {
+                        return 6;
+                    } else {
+                        return 7;
+                    }
+                }
+            }
+
+            function startMatch() {
+                aD = $('#aD label.active input').val();
+                bD = $('#bD label.active input').val();
+                cD = $('#cD label.active input').val();
+                dD = $('#dD label.active input').val();
+
+                if (aD === undefined) {
+                    alert("Please fill in all the fields :)");
+                    return;
+                }
+                if (bD === undefined) {
+                    alert("Please fill in all the fields :)");
+                    return;
+                }
+                if (cD === undefined) {
+                    alert("Please fill in all the fields :)");
+                    return;
+                }
+                if (dD === undefined) {
+                    alert("Please fill in all the fields :)");
+                    return;
+                }
+
+                document.getElementById("autoBox").style.visibility = "visible";
+                document.getElementById("orient").style.display = "none";
+
+                ul = document.getElementById("autoStartDDL");
+                ul.appendChild(makeDDLI("in the spy box.", "rstart"));
+                ul.appendChild(makeDDLI("by the " + aD + ".", "rstart"));
+                ul.appendChild(makeDDLI("by the " + bD + ".", "rstart"));
+                ul.appendChild(makeDDLI("by the " + cD + ".", "rstart"));
+                ul.appendChild(makeDDLI("by the " + dD + ".", "rstart"));
+                ul.appendChild(makeDDLI("by the " + "low bar" + ".", "rstart"));
+
+                ul = document.getElementById("dInterDDL");
+                ul.appendChild(makeDDLI("no defenses", "rinter"));
+                ul.appendChild(makeDDLI("the " + aD, "rinter"));
+                ul.appendChild(makeDDLI("the " + bD, "rinter"));
+                ul.appendChild(makeDDLI("the " + cD, "rinter"));
+                ul.appendChild(makeDDLI("the " + dD, "rinter"));
+                ul.appendChild(makeDDLI("the " + "low bar" + ".", "rinter"));
+
+                ul = document.getElementById("dByDDL");
+                ul.appendChild(makeDDLI("doing nothing.", "rby"));
+                ul.appendChild(makeDDLI("crossing.", "rby"));
+                ul.appendChild(makeDDLI("getting there.", "rby"));
+
+                document.getElementById("ATITLE").innerHTML = aD.charAt(0).toUpperCase() + aD.slice(1) + " Score:";
+                document.getElementById("BTITLE").innerHTML = bD.charAt(0).toUpperCase() + bD.slice(1) + " Score:";
+                document.getElementById("CTITLE").innerHTML = cD.charAt(0).toUpperCase() + cD.slice(1) + " Score:";
+                document.getElementById("DTITLE").innerHTML = dD.charAt(0).toUpperCase() + dD.slice(1) + " Score:";
+            }
+
+            function makeDDLI(text, overID) {
+                a = document.createElement("a");
+                a.setAttribute("href", "#");
+                a.setAttribute("onclick", "document.getElementById('" + overID + "').innerHTML = this.innerHTML;");
+                a.innerHTML = text;
+
+                li = document.createElement("li");
+                li.appendChild(a);
+
+                return li;
+            }
+
+            function startTele() {
+                sc = $('#autoscore label.active input').val();
+                if (sc === undefined) {
+                    alert("Please fill in all the fields :)");
+                    return;
+                }
+
+                document.getElementById("teleBox").style.visibility = "visible";
+                document.getElementById("autoBox").style.display = "none";
+
+            }
+
+            function endMatch() {
+                document.getElementById("postBox").style.visibility = "visible";
+                document.getElementById("teleBox").style.display = "none";
+            }
+
+            var isMatchSubmitting = false;
+            function submitMatch() {
+                dc = $('#captured label.active input').val();
+                ds = $('#scaled label.active input').val();
+
+                if (dc === undefined) {
+                    alert("Please fill in all the required fields :)");
+                    return;
+                }
+                if (ds === undefined) {
+                    alert("Please fill in all the required fields :)");
+                    return;
+                }
+
+                if (isMatchSubmitting) return;
+                isMatchSubmitting = true;
+                var match = {};
+                match.scout = persist.user.id;
+                match.notes = document.getElementById("notes").value;
+
+                var auto = {};
+                auto.startingPosition = toDefense(document.getElementById("rstart").innerHTML);
+                auto.defense = toDefense(document.getElementById("rinter").innerHTML);
+                auto.defenseCross = toCross(document.getElementById("rby").innerHTML);
+                auto.score = $('#autoscore label.active input').val();
+                match.auto = auto;
+
+                var tele = {crosses: {}, scores: {}};
+                tele.crosses.PORTCULLIS = localCrosses[0];
+                tele.crosses.CHIVAL = localCrosses[1];
+                tele.crosses.MOAT = localCrosses[2];
+                tele.crosses.RAMPARTS = localCrosses[3];
+                tele.crosses.DRAWBRIDGE = localCrosses[4];
+                tele.crosses.SALLY = localCrosses[5];
+                tele.crosses.ROCKWALL = localCrosses[6];
+                tele.crosses.TERRAIN = localCrosses[7];
+                tele.crosses.LOWBAR = localCrosses[8];
+
+                // tele.scores.PORTCULLIS = aD.charAt(0) === "p" ? document.getElementById("ascore").innerHTML : 0;
+                // tele.scores.CHIVAL = aD.charAt(0) === "p" ? 0 : document.getElementById("ascore").innerHTML;
+                // tele.scores.MOAT = bD.charAt(0) === "m" ? document.getElementById("bscore").innerHTML : 0;
+                // tele.scores.RAMPARTS = bD.charAt(0) === "m" ? 0 : document.getElementById("bscore").innerHTML;
+                // tele.scores.DRAWBRIDGE = cD.charAt(0) === "d" ? document.getElementById("cscore").innerHTML : 0;
+                // tele.scores.SALLY = cD.charAt(0) === "d" ? 0 : document.getElementById("cscore").innerHTML;
+                // tele.scores.ROCKWALL = dD.charAt(2) === "c" ? document.getElementById("dscore").innerHTML : 0;
+                // tele.scores.TERRAIN = dD.charAt(2) === "c" ? 0 : document.getElementById("dscore").innerHTML;
+                // tele.scores.LOWBAR = document.getElementById("lscore").innerHTML;
+
+
+                tele.scores.PORTCULLIS  = 0;
+                tele.scores.CHIVAL  = 0;
+                tele.scores.MOAT  = 0;
+                tele.scores.RAMPARTS  = 0;
+                tele.scores.DRAWBRIDGE  = 0;
+                tele.scores.SALLY  = 0;
+                tele.scores.ROCKWALL  = 0;
+                tele.scores.TERRAIN  = 0;
+                tele.scores.LOWBAR  = 0;
+
+                tele.lowGoalsMade = document.getElementById("lowSuccess").innerHTML;
+                tele.lowGoalsMissed = document.getElementById("lowFail").innerHTML;
+                tele.highGoalsMade = document.getElementById("highSuccess").innerHTML;
+                tele.highGoalsMissed = document.getElementById("highFail").innerHTML;
+
+                tele.challenged = ynToTf($('#captured label.active input').val());
+                tele.scaled = ynToTf($('#scaled label.active input').val());
+                match.teleop = tele;
+
+                //persist.spec.matches[persist.match.number - 1] = match;
+                persist.spec.matches.push(match); // so that the next match has something to overwrite don't judge it's 3:14 am the night (morning) before competition
+
+                window.name = JSON.stringify(persist);
+                console.log(persist);
+
+                // writeFile("persist.txt", window.name); UNCOMMENT
+                // writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches[persist.spec.matches.length-1]));
+                // persist.lastScoutedMatch = persist.match.number;
+
+                persist.match.number = parseInt(persist.match.number) + 1;
+                persist.match.robot = myTablet.matchSchedule[String(persist.match.number)][myTablet.role];
+                window.name = JSON.stringify(persist);
+
+                window.location.href = "thanks.html";
+
+                // document.addEventListener('deviceready', function () {
+                //     cordova.plugins.email.open({
+                //         to:      'maqueline@catlin.edu',
+                //         subject: 'data',
+                //         body:    window.name
+                //     });                
+                // }, false);
+
+
+                // document.getElementById("fileNameInput").value = "data";
+                // document.getElementById("textInput").value = window.name;
+
+                // var elem = document.getElementById("writeFileButton");
+                // if (typeof elem.onclick == "function") {
+                //     elem.onclick.apply(elem);
+                // }
+            }
+
+            function toDefense(str) {
+                if (str.includes("no defen")) {
+                    return "NONE";
+                }
+                if (str.includes(aD)) {
+                    if (aD.charAt(0) === "p") { 
+                        return "PORTCULLIS";
+                    } else {
+                        return "CHIVAL";
+                    }
+                } else if (str.includes(bD)) {
+                    if (bD.charAt(0) === "m") {
+                        return "MOAT";
+                    } else {
+                        return "RAMPARTS";
+                    }
+                } else if (str.includes(cD)) {
+                    if (cD.charAt(0) === "d") {
+                        return "DRAWBRIDGE";
+                    } else {
+                        return "SALLY";
+                    }
+                } else if (str.includes(dD)) {
+                    if (dD.charAt(2) === "c") {
+                        return "ROCKWALL";
+                    } else {
+                        return "TERRAIN";
+                    }
+                } else if (str.includes("spy")) {
+                    return "SPYBOX";
+                } else if (str.includes("low")) {
+                    return "LOWBAR";
+                }
+            }
+
+            function toCross(str) {
+                if (str.charAt(0) === "d") {
+                    return "NONE";
+                } else if (str.charAt(0) === "c") {
+                    return "CROSS";
+                } else if (str.charAt(0) === "g") {
+                    return "REACH";
+                }
+            }
+
+            function ynToTf(str) {
+                if (str.charAt(0) === "y") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function populate() {
+                document.getElementById("autoBox").style.visibility = "hidden";
+                document.getElementById("teleBox").style.visibility = "hidden";
+                document.getElementById("postBox").style.visibility = "hidden";
+                if (persist.match.robot === "UHOH") {
+                    persist.match.robot = myTablet.matchSchedule[persist.match.number][myTablet.role];
+                }
+                if (persist.match.number === persist.lastScoutedMatch) {
+                    persist.match.number = parseInt(persist.match.number)+1;
+                }
+                persist.match.robot = myTablet.matchSchedule[persist.match.number][myTablet.role];
+                document.getElementById("youare").innerHTML = "You are: " + persist.user.name + " <small><a href='#' onclick='matchMinus()'>Not You?</a></small>";
+                document.getElementById("scouting").innerHTML = "You are scouting team: " + persist.match.robot;
+                
+                document.getElementById("navscouting").innerHTML = "Scouting: " + persist.match.robot + " in match " + persist.match.number;
+                document.getElementById("bet").innerHTML = "You bet on: " + persist.user.lastbet;
+
+                for (var i = 0; i < parseInt(persist.match.numberOfMatches); i++) {
+                    var a = document.createElement("a");
+                    a.setAttribute("href", "#");
+                    a.setAttribute("onclick", "document.getElementById('dLabel').innerHTML = this.innerHTML");
+                    a.innerHTML = i + 1;
+
+                    var li = document.createElement("li");
+                    li.appendChild(a);
+
+                    document.getElementById("matchNumList").appendChild(li)
+                }
+            }
+
+            function missingRobot() {
+                var reason = $('input[name="missingRobot"]:checked').val();
+                
+                if (reason === "wrongmatch") {
+                    $('#setMatchNumber').modal('toggle')
+                } else if (reason === "broken" || reason === "noshow") {
+                    persist.match.number = parseInt(persist.match.number) + 1;
+                    //persist.spec.matches[persist.spec.matches.length - 1].misc.brokenDown = true;
+                    //sendOff(persist.spec);
+                    window.location.href = "thanks.html";
+                }
+            }
+
+            function disabledRobot() {
+                var reason = $('input[name="missingRobot"]:checked').val();
+
+                if (reason === "reset") {
+                    window.location.href = "portal.html";
+                } else {
+                    //persist.spec.matches[persist.spec.matches.length - 1].misc.brokenDown = true;
+                    //sendOff(persist.spec);
+                    persist.match.number = parseInt(persist.match.number) + 1;
+                    window.location.href = "thanks.html";
+                }
+            }
+
+            function resetMatchNumber() {
+                n = document.getElementById('matchNumResetIn').value;
+                persist.match.number = n;
+                persist.match.robot = myTablet.matchSchedule[String(n)][myTablet.role];
+                window.name = JSON.stringify(persist);
+                location.reload();
+            }
+
+            function matchMinus() {
+                n = parseInt(persist.match.number);
+                persist.match.number = String(n - 1);
+                console.log(persist.match);
+                window.name = JSON.stringify(persist);
+                window.location.href = "login.html";
+            }
+        </script>
+        <style type="text/css"> 
+            body { padding-top: 70px; }
+            #shotList { list-style-type: none; }
+            #DCList { list-style-type: none; }
+            #crossableDefenses { list-style-type: none; }
+            .btn-gross { background-color: #E9DB20 }
+            .white, .white a {
+                color: #fff;
+            }
+            #filekeeper {
+                color: white;
+            }
+        </style>
+    </body>
+</html>
