@@ -13,13 +13,12 @@
     </head>
     <body>
         <div class="container text-center" onload="init()">
-            <div class="startout"><div class="startin"><a class="btn btn-primary btn-lg btn-xl btn-drop btn-block" onclick="go();">START</a></div></div>
+            <div class="startout"><div class="startin"><a class="btn btn-primary btn-lg btn-xl btn-drop btn-block" onclick="go();">Donkey</a></div></div>
         </div>
         <script src="cordova.js"></script>
-
         <script src="js/tablet.js"></script>
         <script src="js/writeFileFinal.js"></script>
-        <script src="js/index.js"></script>
+        <script type="text/plain" src="js/index.js"></script>
         <script src="js/jquery-2.2.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
 
@@ -28,6 +27,7 @@
             function go() {
                 if (!(hasinit)) {
                     alert("nope");
+                    go();
                 } else {
                     if (typeof persist === 'undefined') {
                         persist = {
@@ -115,7 +115,7 @@
                         console.log(cnt);
                         if (cnt.substr(0, 5) === "Error") {
                             alert("no persist file yet!");
-                            console.log("skiiping perisit, load, init")
+                            console.log("skipping perisit, load, init")
                             persist = {
                                 people: {},
                                 user: {
@@ -167,7 +167,7 @@
                         }
                     });
                     hasinit = true;
-            });
+            }, true);
 
         </script>
     </body>

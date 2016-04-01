@@ -653,34 +653,17 @@
                 persist.spec.matches.push(match); // so that the next match has something to overwrite don't judge it's 3:14 am the night (morning) before competition
 
                 window.name = JSON.stringify(persist);
-                console.log(persist);
+                console.log(persist.spec.matches[persist.spec.matches.length-1]);
 
-                // writeFile("persist.txt", window.name); UNCOMMENT
-                // writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches[persist.spec.matches.length-1]));
-                // persist.lastScoutedMatch = persist.match.number;
+                writeFile("persist.txt", window.name); 
+                writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches));
+                persist.lastScoutedMatch = persist.match.number;
 
                 persist.match.number = parseInt(persist.match.number) + 1;
                 persist.match.robot = myTablet.matchSchedule[String(persist.match.number)][myTablet.role];
                 window.name = JSON.stringify(persist);
 
-                window.location.href = "thanks.html";
-
-                // document.addEventListener('deviceready', function () {
-                //     cordova.plugins.email.open({
-                //         to:      'maqueline@catlin.edu',
-                //         subject: 'data',
-                //         body:    window.name
-                //     });                
-                // }, false);
-
-
-                // document.getElementById("fileNameInput").value = "data";
-                // document.getElementById("textInput").value = window.name;
-
-                // var elem = document.getElementById("writeFileButton");
-                // if (typeof elem.onclick == "function") {
-                //     elem.onclick.apply(elem);
-                // }
+                setTimeout(function() {window.location.href = "thanks.html";}, 2000);
             }
 
             function toDefense(str) {
@@ -764,6 +747,15 @@
 
                     document.getElementById("matchNumList").appendChild(li)
                 }
+            }
+
+            function sleep(milliseconds) {
+              var start = new Date().getTime();
+              for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds){
+                  break;
+                }
+              }
             }
 
             function missingRobot() {
