@@ -40,8 +40,13 @@
                             <h4 id="bet">You bet on:</h4>
                         </div>
                     </div>
-                    <div class="col-xs-4">
-                        <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#missingRobot">Missing Robot!</button>
+                    <div class="col-xs-4 text-center">
+                        <div class="row">
+                            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" style="margin-bottom: 10px;" data-target="#missingRobot">Missing Robot!</button>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#setMatchNumber">Wrong Match!</button>
+                        </div>
                     </div>
                 </div>
                 <div class="text-center container row">
@@ -151,156 +156,132 @@
                 <button type="button" class="btn btn-primary btn-block btn-lg" onclick="startTele()">Start Teleop</button>
             </div>
             <div id="teleBox">
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary" onclick="backToAuto();">Go Back</button>
+                </div>
                 <h1>Teleop</h1>
                 <div class="container">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="row text-center" id="shotBox">
-                            <h3>Shots</h3>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <h4>Low Goal</h4>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row text-center" id="shotBox">
+                                <h3>Shots</h3>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h4>Low Goal</h4>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <h4>High Goal</h4>
+                                    </div>
                                 </div>
-                                <div class="col-xs-6">
-                                    <h4>High Goal</h4>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('lowSuccess', -1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="lowSuccess" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('lowSuccess', 1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MADE</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('highSuccess', -1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="highSuccess" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('highSuccess', 1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MADE</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('lowFail', -1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="lowFail" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('lowFail', 1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MISSED</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('highFail', -1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="highFail" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('highFail', 1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div><label>MISSED</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="btn-group btn-lg" id="">
-                                        <label id="down" onclick="changeScore('lowSuccess', -1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="lowSuccess" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('lowSuccess', 1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                    </div><label>MADE</label>
+                        </div>
+                        <br>
+                        <div class="col-sm-6">
+                            <div class="row text-center" id="DCBox">
+                                <h3>Defense Crossings</h3>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="ATITLE">A</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('ascore', -1, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="ascore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('ascore', 1, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-6">
-                                    <div class="btn-group btn-lg" id="">
-                                        <label id="down" onclick="changeScore('highSuccess', -1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="highSuccess" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('highSuccess', 1, 'N')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                    </div><label>MADE</label>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="BTITLE">B</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                            <label id="down" onclick="changeScore('bscore', -1, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="bscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('bscore', 1, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <div class="btn-group btn-lg" id="">
-                                        <label id="down" onclick="changeScore('lowFail', -1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="lowFail" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('lowFail', 1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                    </div><label>MISSED</label>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="CTITLE">C</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                        <label id="down" onclick="changeScore('cscore', -1, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="cscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('cscore', 1, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-xs-6">
-                                    <div class="btn-group btn-lg" id="">
-                                        <label id="down" onclick="changeScore('highFail', -1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="highFail" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('highFail', 1, 'N')" class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                    </div><label>MISSED</label>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="DTITLE">D</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                        <label id="down" onclick="changeScore('dscore', -1, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="dscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('dscore', 1, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 id="low">Low Bar Score:</h4>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="btn-group btn-lg" id="">
+                                        <label id="down" onclick="changeScore('lscore', -1, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
+                                            <label id="lscore" class="btn btn-lg btn-default">0</label>
+                                            <label id="up" onclick="changeScore('lscore', 1, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <br>
-                    <div class="col-sm-6">
-                        <div class="row text-center" id="DCBox">
-                            <h3>Defense Crossings</h3>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <h4 id="ATITLE">A</h4>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="btn-group btn-lg" id="">
-                                        <label id="down" onclick="changeScore('ascore', -1, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="ascore" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('ascore', 1, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-
-                                        <!-- <label id="down" onclick="changeScore('ascore', -1, 'A')" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-arrow-left"></span></label>
-                                        <label id="ascore" class="btn btn-lg btn-secondary">0</label>
-                                        <label id="up" onclick="changeScore('ascore', 1, 'A')" class="btn btn-lg btn-warning"><label class="btn-xs" style="margin: 0px"><span class="glyphicon glyphicon-arrow-up"></span></label></label>
-                                        <label id="up" onclick="changeScore('ascore', 2, 'A')" class="btn btn-lg btn-gross"><label class="btn" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; padding-left: 4px; padding-right: 5px;"><span class="glyphicon glyphicon-arrow-up white"></span></label></label>
-                                        <label id="up" onclick="changeScore('ascore', 3, 'A')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <h4 id="BTITLE">B</h4>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="btn-group btn-lg" id="">
-                                        <label id="down" onclick="changeScore('bscore', -1, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="bscore" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('bscore', 1, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                        <!-- 
-                                        <label id="down" onclick="changeScore('bscore', -1, 'B')" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-arrow-left"></span></label>
-                                        <label id="bscore" class="btn btn-lg btn-secondary">0</label>
-                                        <label id="up" onclick="changeScore('bscore', 1, 'B')" class="btn btn-lg btn-warning"><label class="btn-xs" style="margin: 0px"><span class="glyphicon glyphicon-arrow-up"></span></label></label>
-                                        <label id="up" onclick="changeScore('bscore', 2, 'B')" class="btn btn-lg btn-gross"><label class="btn" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; padding-left: 4px; padding-right: 5px;"><span class="glyphicon glyphicon-arrow-up white"></span></label></label>
-                                        <label id="up" onclick="changeScore('bscore', 3, 'B')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <h4 id="CTITLE">C</h4>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="btn-group btn-lg" id="">
-                                    <label id="down" onclick="changeScore('cscore', -1, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="cscore" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('cscore', 1, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                        <!-- 
-                                        <label id="down" onclick="changeScore('cscore', -1, 'C')" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-arrow-left"></span></label>
-                                        <label id="cscore" class="btn btn-lg btn-secondary">0</label>
-                                        <label id="up" onclick="changeScore('cscore', 1, 'C')" class="btn btn-lg btn-warning"><label class="btn-xs" style="margin: 0px"><span class="glyphicon glyphicon-arrow-up"></span></label></label>
-                                        <label id="up" onclick="changeScore('cscore', 2, 'C')" class="btn btn-lg btn-gross"><label class="btn" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; padding-left: 4px; padding-right: 5px;"><span class="glyphicon glyphicon-arrow-up white"></span></label></label>
-                                        <label id="up" onclick="changeScore('cscore', 3, 'C')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <h4 id="DTITLE">D</h4>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="btn-group btn-lg" id="">
-                                    <label id="down" onclick="changeScore('dscore', -1, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="dscore" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('dscore', 1, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-                                        <!-- 
-                                        <label id="down" onclick="changeScore('dscore', -1, 'D')" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-arrow-left"></span></label>
-                                        <label id="dscore" class="btn btn-lg btn-secondary">0</label>
-                                        <label id="up" onclick="changeScore('dscore', 1, 'D')" class="btn btn-lg btn-warning"><label class="btn-xs" style="margin: 0px"><span class="glyphicon glyphicon-arrow-up"></span></label></label>
-                                        <label id="up" onclick="changeScore('dscore', 2, 'D')" class="btn btn-lg btn-gross"><label class="btn" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; padding-left: 4px; padding-right: 5px;"><span class="glyphicon glyphicon-arrow-up white"></span></label></label>
-                                        <label id="up" onclick="changeScore('dscore', 3, 'D')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <h4 id="low">Low Bar Score:</h4>
-                                </div>
-                                <div class="col-xs-8">
-                                    <div class="btn-group btn-lg" id="">
-                                    <label id="down" onclick="changeScore('lscore', -1, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-down"></span></label>
-                                        <label id="lscore" class="btn btn-lg btn-default">0</label>
-                                        <label id="up" onclick="changeScore('lscore', 1, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label>
-<!-- 
-                                        <label id="down" onclick="changeScore('lscore', -1, 'L')" class="btn btn-lg btn-default"><span class="glyphicon glyphicon-arrow-left"></span></label>
-                                        <label id="lscore" class="btn btn-lg btn-secondary">0</label>
-                                        <label id="up" onclick="changeScore('lscore', 1, 'L')" class="btn btn-lg btn-warning"><label class="btn-xs" style="margin: 0px"><span class="glyphicon glyphicon-arrow-up"></span></label></label>
-                                        <label id="up" onclick="changeScore('lscore', 2, 'L')" class="btn btn-lg btn-gross"><label class="btn" style="margin: 0px; padding-top: 0px; padding-bottom: 0px; padding-left: 4px; padding-right: 5px;"><span class="glyphicon glyphicon-arrow-up white"></span></label></label>
-                                        <label id="up" onclick="changeScore('lscore', 3, 'L')" class="btn btn-lg btn-success"><span class="glyphicon glyphicon-arrow-up"></span></label> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-primary btn-block btn-lg" onclick="endMatch()">End Match</button>
                 </div>
-                <br>
-                <button type="button" class="btn btn-primary btn-block btn-lg" onclick="endMatch()">End Match</button>
-            </div>
             </div>
             <div id="postBox">
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary" onclick="backToTele()">Go Back</button>
+                </div>
                 <h1>Post Match Questions</h1>
                 <div class="row">
                     <div class="col-xs-6 text-center">
@@ -330,7 +311,7 @@
                     <div class="col-xs-12">
                         <h4>Do you have something important to note about your robot in this match? If so, please write it below:</h4>
                         <div class="form-group">
-                            <textarea class="form-control" rows="5" id="notes"></textarea>
+                            <textarea class="form-control" rows="5" placeholder="Optional" id="notes"></textarea>
                         </div>
                     </div>
                 </div>
@@ -460,6 +441,16 @@
             var localCrosses = [0, 0, 0, 0, 0, 0, 0, 0, 0];
             var aD, bD, cD, dD;
 
+            function backToAuto() {
+                document.getElementById("teleBox").style.visibility = "hidden";
+                document.getElementById("autoBox").style.display = "block";
+            }
+
+            function backToTele() {
+                document.getElementById("postBox").style.visibility = "hidden";
+                document.getElementById("teleBox").style.display = "block";    
+            }
+
             function changeScore(idd, additive, group){
                 localCrosses[groupToIndex(group)] += 1;
 
@@ -509,14 +500,30 @@
             }
 
             function startMatch() {
-                document.getElementById("autoBox").style.visibility = "visible";
-                document.getElementById("orient").style.display = "none";
-
-
                 aD = $('#aD label.active input').val();
                 bD = $('#bD label.active input').val();
                 cD = $('#cD label.active input').val();
                 dD = $('#dD label.active input').val();
+
+                if (aD === undefined) {
+                    alert("Please fill in the A group defense :)");
+                    return;
+                }
+                if (bD === undefined) {
+                    alert("Please fill in the B group defense :)");
+                    return;
+                }
+                if (cD === undefined) {
+                    alert("Please fill in the C group defense :)");
+                    return;
+                }
+                if (dD === undefined) {
+                    alert("Please fill in the D group defense :)");
+                    return;
+                }
+
+                document.getElementById("autoBox").style.visibility = "visible";
+                document.getElementById("orient").style.display = "none";
 
                 ul = document.getElementById("autoStartDDL");
                 ul.appendChild(makeDDLI("in the spy box.", "rstart"));
@@ -558,6 +565,12 @@
             }
 
             function startTele() {
+                sc = $('#autoscore label.active input').val();
+                if (sc === undefined) {
+                    alert("Please fill in all the fields :)");
+                    return;
+                }
+
                 document.getElementById("teleBox").style.visibility = "visible";
                 document.getElementById("autoBox").style.display = "none";
 
@@ -567,8 +580,21 @@
                 document.getElementById("postBox").style.visibility = "visible";
                 document.getElementById("teleBox").style.display = "none";
             }
+
             var isMatchSubmitting = false;
             function submitMatch() {
+                dc = $('#captured label.active input').val();
+                ds = $('#scaled label.active input').val();
+
+                if (dc === undefined) {
+                    alert("Please fill in all the required fields :)");
+                    return;
+                }
+                if (ds === undefined) {
+                    alert("Please fill in all the required fields :)");
+                    return;
+                }
+
                 if (isMatchSubmitting) return;
                 isMatchSubmitting = true;
                 var match = {};
@@ -629,17 +655,15 @@
                 window.name = JSON.stringify(persist);
                 console.log(persist);
 
-                writeFile("persist.txt", window.name);
-                writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches[persist.spec.matches.length-1]));
-                persist.lastScoutedMatch = persist.match.number;
+                // writeFile("persist.txt", window.name); UNCOMMENT
+                // writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches[persist.spec.matches.length-1]));
+                // persist.lastScoutedMatch = persist.match.number;
 
                 persist.match.number = parseInt(persist.match.number) + 1;
                 persist.match.robot = myTablet.matchSchedule[String(persist.match.number)][myTablet.role];
                 window.name = JSON.stringify(persist);
 
-
-
-                setTimeout(function() {window.location.href = "thanks.html"}, 500);
+                window.location.href = "thanks.html";
 
                 // document.addEventListener('deviceready', function () {
                 //     cordova.plugins.email.open({
@@ -660,8 +684,11 @@
             }
 
             function toDefense(str) {
+                if (str.includes("no defen")) {
+                    return "NONE";
+                }
                 if (str.includes(aD)) {
-                    if (aD.charAt(0) === "p") {
+                    if (aD.charAt(0) === "p") { 
                         return "PORTCULLIS";
                     } else {
                         return "CHIVAL";

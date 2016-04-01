@@ -26,9 +26,9 @@
         <script type="text/javascript">
             var hasinit = false;
             function go() {
-                // if (!(hasinit)) { UNCOMMENT BEFORE PUTTING ON A TABLET
-                //     alert("nope");
-                // } else {
+                if (!(hasinit)) {
+                    alert("nope");
+                } else {
                     if (typeof persist === 'undefined') {
                         persist = {
                             people: {},
@@ -104,7 +104,7 @@
                             }
                         }
                     };
-                //} UNCOMMENT
+                } 
 
                 window.name = JSON.stringify(persist);
                 window.location.href = 'pages/login.html';

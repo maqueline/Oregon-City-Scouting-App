@@ -6,9 +6,9 @@
         <param name="onload" value="true" />
     </feature>
     <allow-intent href="market:*" />
-    <name>Scouting App</name>
+    <name>Spywatch</name>
     <description>
-        1540 Scouting App Prototype.
+        1540 Scouting App for the Oregon City Event.
     </description>
     <content src="index.html" />
     <preference name="permissions" value="none" />

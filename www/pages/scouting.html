@@ -655,32 +655,15 @@
                 window.name = JSON.stringify(persist);
                 console.log(persist);
 
-                // writeFile("persist.txt", window.name); UNCOMMENT
-                // writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches[persist.spec.matches.length-1]));
-                // persist.lastScoutedMatch = persist.match.number;
+                writeFile("persist.txt", window.name); 
+                writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches[persist.spec.matches.length-1]));
+                persist.lastScoutedMatch = persist.match.number;
 
                 persist.match.number = parseInt(persist.match.number) + 1;
                 persist.match.robot = myTablet.matchSchedule[String(persist.match.number)][myTablet.role];
                 window.name = JSON.stringify(persist);
 
                 window.location.href = "thanks.html";
-
-                // document.addEventListener('deviceready', function () {
-                //     cordova.plugins.email.open({
-                //         to:      'maqueline@catlin.edu',
-                //         subject: 'data',
-                //         body:    window.name
-                //     });                
-                // }, false);
-
-
-                // document.getElementById("fileNameInput").value = "data";
-                // document.getElementById("textInput").value = window.name;
-
-                // var elem = document.getElementById("writeFileButton");
-                // if (typeof elem.onclick == "function") {
-                //     elem.onclick.apply(elem);
-                // }
             }
 
             function toDefense(str) {
