@@ -600,6 +600,9 @@
                 var match = {};
                 match.scout = persist.user.id;
                 match.notes = document.getElementById("notes").value;
+                match.bettingPick = persist.user.lastbet.toUpperCase();
+                match.teamNumber = persist.match.robot;
+                match.matchNumber = persist.match.number;
 
                 var auto = {};
                 auto.startingPosition = toDefense(document.getElementById("rstart").innerHTML);
@@ -649,15 +652,13 @@
                 tele.scaled = ynToTf($('#scaled label.active input').val());
                 match.teleop = tele;
 
-                //persist.spec.matches[persist.match.number - 1] = match;
-                persist.spec.matches.push(match); // so that the next match has something to overwrite don't judge it's 3:14 am the night (morning) before competition
+                persist.spec.matches.push(match);
 
                 window.name = JSON.stringify(persist);
-                console.log(persist.spec.matches[persist.spec.matches.length-1]);
 
                 writeFile("persist.txt", window.name); 
-                writeFile("data" + persist.match.number + ".txt", JSON.stringify(persist.spec.matches));
-                persist.lastScoutedMatch = persist.match.number;
+                writeFile("data" + match.matchNumber + ".txt", JSON.stringify(match)); // persist.spec.matches[persist.match.number]
+                persist.lastScoutedMatch = match.matchNumber;
 
                 persist.match.number = parseInt(persist.match.number) + 1;
                 persist.match.robot = myTablet.matchSchedule[String(persist.match.number)][myTablet.role];
@@ -730,7 +731,7 @@
                     persist.match.number = parseInt(persist.match.number)+1;
                 }
                 persist.match.robot = myTablet.matchSchedule[persist.match.number][myTablet.role];
-                document.getElementById("youare").innerHTML = "You are: " + persist.user.name + " <small><a href='#' onclick='matchMinus()'>Not You?</a></small>";
+                document.getElementById("youare").innerHTML = "You are: " + persist.user.name; // + " <small><a href='#' onclick='matchMinus()'>Not You?</a></small>"
                 document.getElementById("scouting").innerHTML = "You are scouting team: " + persist.match.robot;
                 
                 document.getElementById("navscouting").innerHTML = "Scouting: " + persist.match.robot + " in match " + persist.match.number;
